@@ -1,0 +1,45 @@
+<html>
+<title></title>
+<header>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/raphael-min.js"></script>
+    <script src="js/kartograph.min.js"></script>
+</header>
+<body>
+    <script>
+    $(document).ready(function(){
+        var map = $K.map('#map');
+        map.loadMap('svg/world.svg', function(){
+
+            map.addLayer('countries', {
+                styles: {
+                    fill: '#9ab',
+                    stroke: '#fff'
+                },
+                click: function(d, path) {
+                    path.attr('fill', 'red').animate({ fill: '#bcd' }, 1000);
+                    alert('you clicked on '+d.name);
+                }
+            });
+
+            map.addSymbols({
+                type: kartograph.Bubble,
+                data: [{ lon: 0.4, lat: 52.5, name: 'A' }, { lon: 160, lat:34, name:'B'}],
+                radius: 5,
+                location: function(d) { return [d.lon, d.lat] },
+                attrs: {
+                    fill: 'red',
+                    'fill-opacity': 0.3
+                },
+                click: function(d) {
+                    alert('you clicked on the symbol named '+d.name);   
+                }
+            });
+
+        }); 
+
+    });
+    </script>
+    <div id="map"></div>
+</body>
+</html>
